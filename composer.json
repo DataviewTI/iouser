@@ -1,0 +1,24 @@
+{
+    "name": "dataview/iouser",
+    "description": "serviço de cadastro de usuários da intranetone",
+    "authors": [
+        {
+            "name": "Thiago Brauer Ribeiro",
+            "email": "thiagobrauer@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+        "Dataview\\IOUser\\": "src/"
+        }
+      },
+    "require": {
+    },
+    "extra": {
+      "laravel": {
+          "providers": [
+              "\\Dataview\\IOUser\\IOUserServiceProvider"
+          ]
+      }
+  }
+}

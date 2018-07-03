@@ -1,0 +1,30 @@
+{
+    "description": "User service assets package for IntranetOne",
+    "license": "MIT",
+    "main": "wploader.js",
+    "name": "intranetone-user",
+    "version": "0.0.1",
+    "maintainers": [
+      {
+        "name": "Marcelo Disconzi",
+        "email": "mdisconzi@gmail.com"
+      },
+      {
+        "name": "Thiago Brauer",
+        "email": "thiagobrauer@gmail.com"
+      }
+    ],
+    "keywords": [
+      "Laravel",
+      "IntranetOne",
+      "Intranet CMS",
+      "Dataview",
+      "Users Management"
+    ],
+    "IODependencies": {
+    },
+    "ignore": [
+      "node_modules"
+    ]
+  }
+  
