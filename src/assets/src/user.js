@@ -31,62 +31,62 @@ new IOService({
       }
       
     });
+
+    console.log('teste');
     
-    //FormValidation initialization
-    self.fv = self.df.formValidation({
-      locale: 'pt_BR',
-      excluded: 'disabled',
-      framework: 'bootstrap',  
-      icon: {
-        valid: 'fv-ico ico-check',
-        invalid: 'fv-ico ico-close',
-        validating: 'fv-ico ico-gear ico-spin'
-      },
-      fields:{
-        first_name:{
-          validators:{
-            notEmpty:{
-              message: 'O nome é obrigatório'
-            },
-          }
-        },
-        last_name:{
-          validators:{
-            notEmpty:{
-              message: 'O sobrenome é obrigatório'
-            },
-          }
-        },
-        email:{
-          validators:{
-            notEmpty:{
-              message: 'O email é obrigatória'
-            },
-          }
-        },
-        password:{
-          validators:{
-            notEmpty:{
-              message: 'A senha é obrigatória'
-            },
-          }
-        },
-        confirm_password:{
-          validators:{
-            identical: {
-              field: 'password',
-              message: 'A senha e a confirmação de senha devem ser iguais'
-            }
-          }
-        },
-      }
-    });
+    // self.fv = FormValidation.formValidation(
+    //   document.getElementById('default-form'),
+    //   {
+    //     fields:{
+    //       first_name:{
+    //         validators:{
+    //           notEmpty:{
+    //             enabled: true,
+    //             message: 'O nome é obrigatório'
+    //           },
+    //         }
+    //       },
+    //       last_name:{
+    //         validators:{
+    //           notEmpty:{
+    //             enabled: true,
+    //             message: 'O sobrenome é obrigatório'
+    //           },
+    //         }
+    //       },
+    //       email:{
+    //         validators:{
+    //           notEmpty:{
+    //             enabled: true,
+    //             message: 'O email é obrigatória'
+    //           },
+    //         }
+    //       },
+    //       password:{
+    //         validators:{
+    //           notEmpty:{
+    //             enabled: false,
+    //             message: 'A senha é obrigatória'
+    //           },
+    //         }
+    //       },
+    //       confirm_password:{
+    //         validators:{
+    //           identical: {
+    //             enabled: true,
+    //             field: 'password',
+    //             message: 'A senha e a confirmação de senha devem ser iguais'
+    //           }
+    //         }
+    //       },
+    //     }
+    // });
 
     self.wizardActions(function(){
     });
 
     self.dt = $('#default-table').DataTable({
-        aaSorting:[ [0,"asc" ]],
+        aaSorting:[ [0,"desc" ]],
         ajax: self.path+'/list',
         initComplete:function(){
           //parent call
@@ -175,7 +175,51 @@ new IOService({
           }      
         ]
       });
+
+
+      self.callbacks.view = view(self);
+
+      self.callbacks.update.onSuccess = function(){
+        self.tabs['listar'].tab.tab('show');
+      }
+
+      self.callbacks.create.onSuccess = function(){
+        self.dt.ajax.reload();
+        self.dt.draw(true);
+        self.tabs['listar'].tab.tab('show');
+      }
+
+      self.callbacks.unload = function(self){
+        $(".aanjulena-btn-toggle").aaDefaultState();
+  
+        $('#__sl-main-group').find('.list-group-item').each(function(i,obj){
+            let appended = false;
+            $('.__sl-box-source').each(function(j,source){
+              if($(source).find('.list-group-item').length<9 && !appended){
+                $(obj).appendTo($(source));
+                appended=true;
+              }
+            });
+        });
+
+      }
       
   }
 
 );
+
+//CRUD CallBacks
+function view(self){
+  return{
+      onSuccess:function(data){
+        $("[name='first_name']").val(data.first_name);
+        $("[name='last_name']").val(data.last_name);
+        $("[name='email']").val(data.email);
+        $("#admin").aaToggle(data.admin);
+
+      },
+        onError:function(self){
+          console.log('executa algo no erro do callback');
+      }
+    }
+}

@@ -17,14 +17,14 @@
 				"_active"=>0,
 				"_tabs"=> [
 					[
-						"tab"=>"Cadastrar",
-						"icon"=>"ico ico-new",
-						"view"=>"User::form"
-					],
-					[
 						"tab"=>"Listar",
 						"icon"=>"ico ico-list",
 						"view"=>"User::table-list"
+					],
+					[
+						"tab"=>"Cadastrar",
+						"icon"=>"ico ico-new",
+						"view"=>"User::form"
 					],
 				]
 			])
