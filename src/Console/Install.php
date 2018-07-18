@@ -2,7 +2,7 @@
 namespace Dataview\IOUser\Console;
 use Dataview\IntranetOne\Console\IOServiceInstallCmd;
 use Dataview\IOUser\IOUserServiceProvider;
-use Dataview\IOUser\PopupSeeder;
+use Dataview\IOUser\UserSeeder;
 
 class Install extends IOServiceInstallCmd
 {
