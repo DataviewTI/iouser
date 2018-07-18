@@ -1,5 +1,5 @@
 {
-    "description": "User service assets package for IntranetOne",
+    "description": "User service's assets package for IntranetOne",
     "license": "MIT",
     "main": "wploader.js",
     "name": "intranetone-user",

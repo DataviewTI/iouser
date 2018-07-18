@@ -17,10 +17,10 @@ class IOUserServiceProvider extends ServiceProvider
 
     public function register()
     {
-    //   $this->commands([
-    //     Console\Install::class,
-    //     Console\Remove::class
-    //   ]);
+      $this->commands([
+        Console\Install::class,
+        Console\Remove::class
+      ]);
 
       $this->app['router']->group(['namespace' => 'dataview\iouser'], function () {
         include __DIR__.'/routes/web.php';
