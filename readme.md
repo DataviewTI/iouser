@@ -28,9 +28,11 @@ class User extends EloquentUser
   
 ```sh
 let io = require('intranetone');
+...
 let user = require('intranetone-user');
 io.compile({
   services:[
+    ...
     new user(),
   ]
 });
