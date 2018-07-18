@@ -6,13 +6,20 @@ use Dataview\IntranetOne\IORequest;
 class UserRequest extends IORequest
 {
   public function sanitize(){
-    dump($this->is('*/update/*'));
     $input = parent::sanitize();
 
     if($input['__admin'] == "true")
       $input['__admin'] = true;
     else
       $input['__admin'] = false;
+
+    if($this->is('*/update/*')){
+      if(array_key_exists('password', $input) && $input['password'] == null)
+        unset($input['password']);
+        
+      if(array_key_exists('confirm_password', $input) && $input['confirm_password'] == null)
+        unset($input['confirm_password']);
+    }
 
     if(array_has($input, 'permissions') && $input['permissions'] != [] && $input['__admin'] == false)
     {

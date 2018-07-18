@@ -77,13 +77,10 @@ class UserController extends IOController{
 		if(!$check['status'])
 			return response()->json(['errors' => $check['errors'] ], $check['code']);
 			
-		// dump($request);
-		dump($request->path());
-
-		// $user = Sentinel::findById($id);
-		// $user = Sentinel::update($user, $request->all());
+		$user = Sentinel::findById($id);
+		$user = Sentinel::update($user, $request->all());
       
-		// return response()->json(['success'=>$user]);
+		return response()->json(['success'=>$user]);
 	}
 
 	public function delete($id){

@@ -11,7 +11,7 @@ new IOService({
         $(this).attr('disabled', true);
       });
     }, 100);
-
+ 
     $('#admin').attrchange(function(attrName) {
       if(attrName == 'aria-pressed'){
         $('#__admin').val($(this).attr('aria-pressed'));
@@ -32,55 +32,66 @@ new IOService({
       
     });
 
-    console.log('teste');
-    
-    // self.fv = FormValidation.formValidation(
-    //   document.getElementById('default-form'),
-    //   {
-    //     fields:{
-    //       first_name:{
-    //         validators:{
-    //           notEmpty:{
-    //             enabled: true,
-    //             message: 'O nome é obrigatório'
-    //           },
-    //         }
-    //       },
-    //       last_name:{
-    //         validators:{
-    //           notEmpty:{
-    //             enabled: true,
-    //             message: 'O sobrenome é obrigatório'
-    //           },
-    //         }
-    //       },
-    //       email:{
-    //         validators:{
-    //           notEmpty:{
-    //             enabled: true,
-    //             message: 'O email é obrigatória'
-    //           },
-    //         }
-    //       },
-    //       password:{
-    //         validators:{
-    //           notEmpty:{
-    //             enabled: false,
-    //             message: 'A senha é obrigatória'
-    //           },
-    //         }
-    //       },
-    //       confirm_password:{
-    //         validators:{
-    //           identical: {
-    //             enabled: true,
-    //             field: 'password',
-    //             message: 'A senha e a confirmação de senha devem ser iguais'
-    //           }
-    //         }
-    //       },
-    //     }
-    // });
+    let form = document.getElementById(self.dfId);
+    let fv1 = FormValidation.formValidation(
+      form,
+      {
+        fields: {
+          first_name:{
+            validators:{
+              notEmpty:{
+                enabled: true,
+                message: 'O nome é obrigatório'
+              },
+            }
+          },
+          last_name:{
+            validators:{
+              notEmpty:{
+                enabled: true,
+                message: 'O sobrenome é obrigatório'
+              },
+            }
+          },
+          email:{
+            validators:{
+              notEmpty:{
+                enabled: true,
+                message: 'O email é obrigatória'
+              },
+            }
+          },
+          password:{
+            validators:{
+              notEmpty:{
+                message: 'A senha é obrigatória'
+              },
+            }
+          },
+          confirm_password:{
+            validators:{
+              identical: {
+                compare: function() {
+                  return form.querySelector('[name="password"]').value;
+                },
+                message: 'A senha e a confirmação de senha devem ser iguais'
+              }
+            }
+          },
+        },
+        plugins: {
+          trigger: new FormValidation.plugins.Trigger(),
+          submitButton: new FormValidation.plugins.SubmitButton(),
+          // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+          bootstrap: new FormValidation.plugins.Bootstrap(),
+          icon: new FormValidation.plugins.Icon({
+            valid: 'fv-ico ico-check',
+            invalid: 'fv-ico ico-close',
+            validating: 'fv-ico ico-gear ico-spin'
+          }),
+        },
+    }).setLocale('pt_BR', FormValidation.locales.pt_BR);
+    self.fv = [fv1];
 
     self.wizardActions(function(){
     });
@@ -202,6 +213,8 @@ new IOService({
             });
         });
 
+        self.fv[0].enableValidator('password');
+
       }
       
   }
@@ -216,7 +229,7 @@ function view(self){
         $("[name='last_name']").val(data.last_name);
         $("[name='email']").val(data.email);
         $("#admin").aaToggle(data.admin);
-
+        self.fv[0].disableValidator('password');
       },
         onError:function(self){
           console.log('executa algo no erro do callback');
