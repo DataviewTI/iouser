@@ -19,12 +19,12 @@ class UserSeeder extends Seeder
           ]);
       }
       //seta privilegios padrão para o role admin
-      $rolse = Sentinel::findRoleBySlug('admin');
-      $rolse->addPermission('user.view');
-      $rolse->addPermission('user.create');
-      $rolse->addPermission('user.update');
-      $rolse->addPermission('user.delete');
-      $rolse->save();
+      $adminRole = Sentinel::findRoleBySlug('admin');
+      $adminRole->addPermission('user.view');
+      $adminRole->addPermission('user.create');
+      $adminRole->addPermission('user.update');
+      $adminRole->addPermission('user.delete');
+      $adminRole->save();
 
     }
 } 
