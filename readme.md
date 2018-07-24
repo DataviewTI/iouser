@@ -15,14 +15,6 @@ Instalar o pacote com php artisan
 ```sh
 php artisan io-user:install
 ```
-Configure o Model app/User.php para extender a classe EloquentUser 
-```php
-use Cartalyst\Sentinel\Users\EloquentUser as EloquentUser;
-...
-class User extends EloquentUser
-{
-...
-```
 
 ## Webpack
   
