@@ -65,6 +65,7 @@
 			["title" => "Sobrenome"],
 			["title" => "Email"],
 			["title" => "Admin"],
+			["title" => "Ativado"],
 			["title" => "Ações"],
 		]
 	])

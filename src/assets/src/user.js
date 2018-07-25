@@ -115,20 +115,12 @@ new IOService({
             { data: 'last_name', name: 'last_name'},
             { data: 'email', name: 'email'},
             { data: 'admin', name: 'admin'},
+            { data: 'activated', name: 'activated'},
             { data: 'actions', name: 'actions'},
         ],
         columnDefs:
         [
             {targets:'__dt_',width: "3%",class:"text-center",searchable: true,orderable:true},
-            {targets:'__dt_acoes',width:"7%",className:"text-center",searchable:false,orderable:false,render:function(data,type,row,y){
-                return self.dt.addDTButtons({
-                    buttons:[
-                        {ico:'ico-eye',_class:'text-primary',title:'preview'},
-                        {ico:'ico-edit',_class:'text-info',title:'editar'},
-                        {ico:'ico-trash',_class:'text-danger',title:'excluir'},
-                    ]});
-                }
-            },
             {targets:'__dt_admin',width: "2%",orderable:true,className:"text-center",render:function(data,type,row){
                 if(data)
                   return self.dt.addDTIcon({ico:'ico-check',value:1,title:'usuario administrador',pos:'left',_class:'text-success'});
@@ -136,8 +128,25 @@ new IOService({
                   return self.dt.addDTIcon({value:0,_class:'invisible'});
               }
             },   
+            {targets:'__dt_acoes',width:"7%",className:"text-center",searchable:false,orderable:false,render:function(data,type,row,y){
+                return self.dt.addDTButtons({
+                    buttons:[
+                        {ico:'ico-eye',_class:'text-primary',title:'Pré-visualização'},
+                        {ico:'ico-edit',_class:'text-info',title:'Editar'},
+                        {ico:'ico-trash',_class:'text-danger',title:'Excluir'},
+                        {ico:'ico-mail',_class:row.activated ? 'text-success invisible' : 'text-success',title:'Reenviar email de confirmação'},
+                    ]});
+                }
+            },
+            {targets:'__dt_ativado',width:"7%",className:"text-center",searchable:false,orderable:false,render:function(data,type,row,y){
+                if(data)
+                    return self.dt.addDTIcon({ico:'ico-check',value:1,title:'usuario ativado',pos:'left',_class:'text-success'});
+                  else
+                    return self.dt.addDTIcon({value:0,_class:'invisible'});
+                }
+            },
         ]	
-      }).on('click',".btn-dt-button[data-original-title=editar]",function(){
+      }).on('click',".btn-dt-button[data-original-title=Editar]",function(){
         var data = self.dt.row($(this).parents('tr')).data();
         self.view(data.id);
       }).on('click','.ico-trash',function(){
@@ -146,6 +155,36 @@ new IOService({
       }).on('click','.ico-eye',function(){
         var data = self.dt.row($(this).parents('tr')).data();
         preview({id:data.id});
+      }).on('click','.ico-mail',function(){
+        var data = self.dt.row($(this).parents('tr')).data();
+        $.ajax({
+          url: '/admin/user/createActivation/'+data.id, 
+          method: 'GET',
+          beforeSend: function(){
+            HoldOn.open({message:"Enviando email, aguarde...",theme:'sk-bounce'});
+          },
+          success: function(data){
+            console.log(data);
+            HoldOn.close();
+            if(data.success)
+            {
+              swal({
+                title:"Um email de confirmação foi enviado para o email "+data.message,
+                confirmButtonText:'OK',
+                type:"success",
+              });
+            }else{
+              swal({
+                title:"Não foi possível enviar o email de confirmação. Verifique se o email cadastrado está correto",
+                confirmButtonText:'OK',
+                type:"error",
+              });
+            }
+          },
+          error:function(ret){
+            self.defaults.ajax.onError(ret,self.callbacks.create.onError);
+          }
+        });//end ajax
       }).on('draw.dt',function(){
         $('[data-toggle="tooltip"]').tooltip();
       });
@@ -190,11 +229,14 @@ new IOService({
 
       self.callbacks.view = view(self);
 
-      self.callbacks.update.onSuccess = function(){
+      self.callbacks.update.onSuccess = function(data){
+        if(data.email)
+          toastr.success("Clique no link presente no email para ativar o cadastro", "Um email de confirmação foi enviado para "+data.email, {timeOut: 10000})
         self.tabs['listar'].tab.tab('show');
       }
 
-      self.callbacks.create.onSuccess = function(){
+      self.callbacks.create.onSuccess = function(data){
+        toastr.success("Clique no link presente no email para ativar o cadastro", "Um email de confirmação foi enviado para "+data.data, {timeOut: 10000})
         self.dt.ajax.reload();
         self.dt.draw(true);
         self.tabs['listar'].tab.tab('show');
