@@ -25,6 +25,7 @@ class UserController extends IOController{
 	
 	public function list(){
 		$query = User::select('id','email', 'first_name', 'last_name')
+		->where('id','!=','1')
 		->with('roles')
 		->get();
 
@@ -71,10 +72,10 @@ class UserController extends IOController{
 
 		if($request->get('__admin')){
 			$adminRole = Sentinel::findRoleBySlug('admin');
-			$adminRole->users()->attach($user);	
+			$user->roles()->attach($adminRole);
 		}else{
 			$userRole = Sentinel::findRoleBySlug('user');
-			$userRole->users()->attach($user);
+			$user->roles()->attach($userRole);
 		}
 
 		$activation = $this->createActivation($user->id);
@@ -114,13 +115,24 @@ class UserController extends IOController{
 			return response()->json(['errors' => $check['errors'] ], $check['code']);
 		
 		$user = Sentinel::findById($id);
+		$adminRole = Sentinel::findRoleBySlug('admin');
 
 		if($request->get('email') != $user->email){
 			$user = Sentinel::update($user, $request->all());
+			if($request->has('__admin') && $request->get('__admin') == true){
+				$user->roles()->attach($adminRole);
+			}else if($request->has('__admin') && $request->get('__admin') == false){
+				$user->roles()->detach($adminRole);
+			}
 			$activation = $this->createActivation($user->id);
 			return response()->json(['success'=>true, 'user'=>$user, 'email'=>$user->email]);
 		}else{
 			$user = Sentinel::update($user, $request->all());
+			if($request->has('__admin') && $request->get('__admin') == true){
+				$user->roles()->attach($adminRole);
+			}else if($request->has('__admin') && $request->get('__admin') == false){
+				$user->roles()->detach($adminRole);
+			}
 			return response()->json(['success'=>true,'user'=>$user]);
 		}
 	}

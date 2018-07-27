@@ -6,7 +6,6 @@
 @stop
 
 @section('main-heading')
-  Cadastro de Usuários
 @stop
 
 @section('main-content')

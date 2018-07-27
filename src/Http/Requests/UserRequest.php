@@ -24,10 +24,8 @@ class UserRequest extends IORequest
     if(array_has($input, 'permissions') && $input['permissions'] != [] && $input['__admin'] == false)
     {
       foreach($input['permissions'] as $permission => $value){
-          $input['permissions'][$permission] = true;
+        $input['permissions'][$permission] = true;
       }
-    }else{
-      $input['permissions'] = [];
     }
 
     $this->replace($input);

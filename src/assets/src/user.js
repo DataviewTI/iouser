@@ -271,6 +271,9 @@ function view(self){
         $("[name='last_name']").val(data.last_name);
         $("[name='email']").val(data.email);
         $("#admin").aaToggle(data.admin);
+        for(var permission in data.permissions) {
+          $('input[name="permissions['+permission+']"]').prop( "checked", true );
+        }
         self.fv[0].disableValidator('password');
       },
         onError:function(self){
