@@ -110,9 +110,11 @@ class UserController extends IOController{
 	}
 	
 	public function update($id, UserRequest $request){
-    	$check = $this->__update($request);
-		if(!$check['status'])
-			return response()->json(['errors' => $check['errors'] ], $check['code']);
+		if($id != Sentinel::getUser()->id){
+			$check = $this->__update($request);
+			if(!$check['status'])
+				return response()->json(['errors' => $check['errors'] ], $check['code']);
+		}
 		
 		$user = Sentinel::findById($id);
 		$adminRole = Sentinel::findRoleBySlug('admin');
@@ -124,6 +126,11 @@ class UserController extends IOController{
 			}else if($request->has('__admin') && $request->get('__admin') == false){
 				$user->roles()->detach($adminRole);
 			}
+
+			if($id == Sentinel::getUser()->id){ 
+				Sentinel::logout();
+			}
+			Activation::remove($user);
 			$activation = $this->createActivation($user->id);
 			return response()->json(['success'=>true, 'user'=>$user, 'email'=>$user->email]);
 		}else{

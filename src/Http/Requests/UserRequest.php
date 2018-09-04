@@ -8,9 +8,9 @@ class UserRequest extends IORequest
   public function sanitize(){
     $input = parent::sanitize();
 
-    if($input['__admin'] == "true")
+    if(array_key_exists("__admin",$input) && $input['__admin'] == "true")
       $input['__admin'] = true;
-    else
+    else if(array_key_exists("__admin",$input))
       $input['__admin'] = false;
 
     if($this->is('*/update/*')){
