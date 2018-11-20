@@ -18,6 +18,15 @@ class UserSeeder extends Seeder
             'order' => Service::max('order')+1
           ]);
       }
+
+      //seta privilegios padrão para o role odin
+      $odinRole = Sentinel::findRoleBySlug('odin');
+      $odinRole->addPermission('user.view');
+      $odinRole->addPermission('user.create');
+      $odinRole->addPermission('user.update');
+      $odinRole->addPermission('user.delete');
+      $odinRole->save();
+
       //seta privilegios padrão para o role admin
       $adminRole = Sentinel::findRoleBySlug('admin');
       $adminRole->addPermission('user.view');
