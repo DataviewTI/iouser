@@ -54,7 +54,7 @@
       
     </div>
     <!-- coluna B-->
-    @if(Sentinel::inRole('admin'))
+    @if(Sentinel::inRole('admin') || Sentinel::inRole('odin'))
       <div class="col-md col-sm-12 pr-1">
     @else
       <div class="col-md col-sm-12 pr-1 d-none">
