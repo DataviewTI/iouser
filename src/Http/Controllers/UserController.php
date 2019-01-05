@@ -4,7 +4,7 @@ namespace Dataview\IOUser;
 use Dataview\IntranetOne\IOController;
 use Illuminate\Http\Response;
 
-use App\User;
+use Dataview\IntranetOne\User;
 use App\Http\Requests;
 use Dataview\IOUser\UserRequest;
 use Sentinel;
