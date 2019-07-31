@@ -147,17 +147,17 @@ new IOService(
           {
             targets: '__dt_acoes',
             width: '7%',
-            className: 'text-center',
+            className: 'text-center b-red',
             searchable: false,
             orderable: false,
             render: function(data, type, row, y) {
               return self.dt.addDTButtons({
                 buttons: [
-                  {
-                    ico: 'ico-eye',
-                    _class: 'text-primary',
-                    title: 'Pré-visualização'
-                  },
+                  // {
+                  //   ico: 'ico-eye',
+                  //   _class: 'text-primary',
+                  //   title: 'Pré-visualização'
+                  // },
                   { ico: 'ico-edit', _class: 'text-info', title: 'Editar' },
                   { ico: 'ico-trash', _class: 'text-danger', title: 'Excluir' },
                   {
@@ -199,10 +199,10 @@ new IOService(
         var data = self.dt.row($(this).parents('tr')).data();
         self.delete(data.id);
       })
-      .on('click', '.ico-eye', function() {
-        var data = self.dt.row($(this).parents('tr')).data();
-        preview({ id: data.id });
-      })
+      // .on('click', '.ico-eye', function() {
+      //   var data = self.dt.row($(this).parents('tr')).data();
+      //   preview({ id: data.id });
+      // })
       .on('click', '.ico-mail', function() {
         var data = self.dt.row($(this).parents('tr')).data();
         $.ajax({
