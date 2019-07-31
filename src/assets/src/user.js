@@ -147,7 +147,7 @@ new IOService(
           {
             targets: '__dt_acoes',
             width: '7%',
-            className: 'text-center b-red',
+            className: 'text-center',
             searchable: false,
             orderable: false,
             render: function(data, type, row, y) {
