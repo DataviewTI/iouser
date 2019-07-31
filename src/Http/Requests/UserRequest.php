@@ -21,12 +21,17 @@ class UserRequest extends IORequest
         unset($input['confirm_password']);
     }
 
-    if(array_has($input, 'permissions') && $input['permissions'] != [] && $input['__admin'] == false)
-    {
-      foreach($input['permissions'] as $permission => $value){
-        $input['permissions'][$permission] = true;
-      }
-    }
+    // if(array_has($input, 'permissions') && $input['permissions'] != [] && $input['__admin'] == false)
+    // {
+    //   foreach($input['permissions'] as $permission => $value){
+    //     $input['permissions'][$permission] = true;
+    //   }
+    // }
+    if($this->has('permissions'))
+      if(filled($input['permissions']))
+        foreach($input['permissions'] as $permission => $value){
+          $input['permissions'][$permission] = $value == "on";
+        }
 
     $this->replace($input);
 	}

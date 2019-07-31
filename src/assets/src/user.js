@@ -270,13 +270,19 @@ new IOService(
           searchable: false,
           orderable: false,
           render: function(data, type, row) {
-            return (
-              '<input type="checkbox" name="permissions[' +
-              row.alias +
-              '.create]" value="' +
-              row.alias +
-              '.create"><br>'
-            );
+            return `<input type="checkbox" name="permissions[${
+              row.alias
+            }.create]"><br>`;
+
+            value = '${row.alias}.create';
+
+            // return (
+            //   '<input type="checkbox" name="permissions[' +
+            //   row.alias +
+            //   '.create]" value="' +
+            //   row.alias +
+            //   '.create"><br>'
+            // );
           }
         },
         {
@@ -286,13 +292,9 @@ new IOService(
           searchable: false,
           orderable: false,
           render: function(data, type, row) {
-            return (
-              '<input type="checkbox" name="permissions[' +
-              row.alias +
-              '.update]" value="' +
-              row.alias +
-              '.update"><br>'
-            );
+            return `<input type="checkbox" name="permissions[${
+              row.alias
+            }.update]"><br>`;
           }
         },
         {
@@ -302,13 +304,9 @@ new IOService(
           searchable: false,
           orderable: false,
           render: function(data, type, row) {
-            return (
-              '<input type="checkbox" name="permissions[' +
-              row.alias +
-              '.delete]" value="' +
-              row.alias +
-              '.delete"><br>'
-            );
+            return `<input type="checkbox" name="permissions[${
+              row.alias
+            }.delete]"><br>`;
           }
         },
         {
@@ -318,13 +316,9 @@ new IOService(
           searchable: false,
           orderable: false,
           render: function(data, type, row) {
-            return (
-              '<input type="checkbox" name="permissions[' +
-              row.alias +
-              '.view]" value="' +
-              row.alias +
-              '.view"><br>'
-            );
+            return `<input type="checkbox" name="permissions[${
+              row.alias
+            }.view]"><br>`;
           }
         }
       ]
