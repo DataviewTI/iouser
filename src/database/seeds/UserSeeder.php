@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
         Service::insert([
             'service' => "User",
             'alias' =>'user',
+            'trans' =>'Usuários',
             'ico' => 'ico-user',
             'description' => 'Cadastro de Usuários',
             'order' => Service::max('order')+1
