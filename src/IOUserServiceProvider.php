@@ -12,6 +12,10 @@ class IOUserServiceProvider extends ServiceProvider
 
     public function boot()
     {
+      $this->publishes([
+        __DIR__.'/config/iouser.php' => config_path('iouser.php'),
+      ]);
+
       $this->loadViewsFrom(__DIR__.'/views', 'User');
     }
 
