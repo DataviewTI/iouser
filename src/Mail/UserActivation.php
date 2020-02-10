@@ -28,9 +28,10 @@ class UserActivation extends Mailable
      */
     public function build()
     {
+      $email = filled(config("iouser.activation.email")) ? config("iouser.activation.email") : config("iouser.mainEmail");
         return $this->view('User::mail.user-activation')
-                    ->from('suporte@dataview.com.br', 'IntranetOne Dataview')
-                    ->subject('Ativação de cadastro')
+                    ->from($email, config("iouser.activation.from"))
+                    ->subject(config("iouser.activation.subject"))
                     ->with(['data' => $this->data]);
     }
 }

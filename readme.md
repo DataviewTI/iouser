@@ -19,6 +19,19 @@ Instalar o pacote com php artisan
 php artisan io-user:install
 ```
 
+Configurar .env para disparo de emails
+
+```sh
+IOUSER_MAIN_EMAIL = "suporte@dataview.com.br"
+IOUSER_ACTIVATION_EMAIL =
+IOUSER_ACTIVATION_FROM = 'IntranetOne Dataview'
+IOUSER_ACTIVATION_SUBJECT = 'Ativação de cadastro'
+```
+
+```sh
+php artisan config:cache
+```
+
 ## Webpack
 
 ```sh
