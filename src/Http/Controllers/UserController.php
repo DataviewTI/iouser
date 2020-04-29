@@ -62,7 +62,6 @@ class UserController extends IOController{
 	}
 
 	public function create(UserRequest $request){
-		// dump($request->all());
 		$check = $this->__create($request);
 		if(!$check['status'])
 		  return response()->json(['errors' => $check['errors'] ], $check['code']);	
@@ -84,13 +83,16 @@ class UserController extends IOController{
 	}
 
 	public function createActivation($userId){
+    
 		try{
 			$user = Sentinel::findById($userId);
-			$activation = Activation::exists($user) ? : Activation::create($user);
+
+			$activation = Activation::exists($user) ? Activation::where('user_id', $userId)->first() : Activation::create($user);
+
 			$mailData = ['user' => $user,'userActivationUrl' => route('user.activate', [$user->id, $activation->code])];
 			Mail::to($user)->send(new UserActivation($mailData));
 		}catch(\Exception $exception){
-			return response()->json(['success'=>false,'message'=>$exception->getMessage()]);
+			return response()->json(['success'=>false,"AA"=>"aa",'message'=>$exception->getMessage()]);
 		}
 	
 		return response()->json(['success'=>true,'message'=>$user->email]);
@@ -121,7 +123,6 @@ class UserController extends IOController{
 		$adminRole = Sentinel::findRoleBySlug('admin');
 
 		if($request->get('email') != $user->email){
-      dump("ali");
 			$user = Sentinel::update($user, $request->all());
 			if($request->has('__admin') && $request->get('__admin') == true){
 				$user->roles()->attach($adminRole);

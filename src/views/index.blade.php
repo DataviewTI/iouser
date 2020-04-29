@@ -35,5 +35,5 @@
   @endsection
 
 @section('footer_scripts')
-	<script src="{{ asset('io/services/io-user-babel.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('io/services/io-user-babel.min.js') }}"></script>
 @stop
