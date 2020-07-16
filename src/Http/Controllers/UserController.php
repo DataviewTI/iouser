@@ -82,14 +82,14 @@ class UserController extends IOController{
 		return response()->json(['success'=>true,'data'=>$request->get('email')]);
 	}
 
-	public function createActivation($userId){
+	public function createActivation($userId, $extra=[]){
     
 		try{
 			$user = Sentinel::findById($userId);
 
 			$activation = Activation::exists($user) ? Activation::where('user_id', $userId)->first() : Activation::create($user);
 
-			$mailData = ['user' => $user,'userActivationUrl' => route('user.activate', [$user->id, $activation->code])];
+			$mailData = ["extra"=> $extra, 'user' => $user,'userActivationUrl' => route('user.activate', [$user->id, $activation->code])];
 			Mail::to($user)->send(new UserActivation($mailData));
 		}catch(\Exception $exception){
 			return response()->json(['success'=>false,"AA"=>"aa",'message'=>$exception->getMessage()]);
