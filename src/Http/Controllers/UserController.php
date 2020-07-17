@@ -51,8 +51,9 @@ class UserController extends IOController{
 		$check = $this->__view();
 		if(!$check['status'])
 			return response()->json(['errors' => $check['errors'] ], $check['code']);
-			
-		$sentinelUser = Sentinel::findUserById($id);
+
+    $userId = filter_var($id, FILTER_VALIDATE_EMAIL) ? User::whereEmail($id)->first()->id : $id;
+		$sentinelUser = Sentinel::findUserById($userId);
 		if($sentinelUser->inRole('admin'))
 			$sentinelUser['admin'] = true;
 		else

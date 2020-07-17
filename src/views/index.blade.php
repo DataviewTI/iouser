@@ -18,7 +18,8 @@
 					[
 						"tab"=>"Listar",
 						"icon"=>"ico ico-list",
-						"view"=>"User::table-list"
+						"view"=>"User::table-list",
+  	        "display"=>!Sentinel::getUser()->inRole('frontendUser'),
 					],
 					[
 						"tab"=>"Cadastrar",

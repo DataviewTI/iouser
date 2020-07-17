@@ -1,6 +1,6 @@
 new IOService(
   {
-    name: "User"
+    name: "User",
   },
   function(self) {
     $(this).attr("aria-pressed", true);
@@ -45,32 +45,32 @@ new IOService(
           validators: {
             notEmpty: {
               enabled: true,
-              message: "O nome é obrigatório"
-            }
-          }
+              message: "O nome é obrigatório",
+            },
+          },
         },
         last_name: {
           validators: {
             notEmpty: {
               enabled: true,
-              message: "O sobrenome é obrigatório"
-            }
-          }
+              message: "O sobrenome é obrigatório",
+            },
+          },
         },
         email: {
           validators: {
             notEmpty: {
               enabled: true,
-              message: "O email é obrigatória"
-            }
-          }
+              message: "O email é obrigatória",
+            },
+          },
         },
         password: {
           validators: {
             notEmpty: {
-              message: "A senha é obrigatória"
-            }
-          }
+              message: "A senha é obrigatória",
+            },
+          },
         },
         confirm_password: {
           validators: {
@@ -78,10 +78,10 @@ new IOService(
               compare: function() {
                 return form.querySelector('[name="password"]').value;
               },
-              message: "A senha e a confirmação de senha devem ser iguais"
-            }
-          }
-        }
+              message: "A senha e a confirmação de senha devem ser iguais",
+            },
+          },
+        },
       },
       plugins: {
         trigger: new FormValidation.plugins.Trigger(),
@@ -91,9 +91,9 @@ new IOService(
         icon: new FormValidation.plugins.Icon({
           valid: "fv-ico ico-check",
           invalid: "fv-ico ico-close",
-          validating: "fv-ico ico-gear ico-spin"
-        })
-      }
+          validating: "fv-ico ico-gear ico-spin",
+        }),
+      },
     }).setLocale("pt_BR", FormValidation.locales.pt_BR);
     self.fv = [fv1];
 
@@ -117,7 +117,7 @@ new IOService(
           { data: "email", name: "email" },
           { data: "admin", name: "admin" },
           { data: "activated", name: "activated" },
-          { data: "actions", name: "actions" }
+          { data: "actions", name: "actions" },
         ],
         columnDefs: [
           {
@@ -125,7 +125,7 @@ new IOService(
             width: "3%",
             class: "text-center",
             searchable: true,
-            orderable: true
+            orderable: true,
           },
           {
             targets: "__dt_admin",
@@ -139,10 +139,10 @@ new IOService(
                   value: 1,
                   title: "usuario administrador",
                   pos: "left",
-                  _class: "text-success"
+                  _class: "text-success",
                 });
               else return self.dt.addDTIcon({ value: 0, _class: "invisible" });
-            }
+            },
           },
           {
             targets: "__dt_acoes",
@@ -165,11 +165,11 @@ new IOService(
                     _class: row.activated
                       ? "text-success invisible"
                       : "text-success",
-                    title: "Reenviar email de confirmação"
-                  }
-                ]
+                    title: "Reenviar email de confirmação",
+                  },
+                ],
               });
-            }
+            },
           },
           {
             targets: "__dt_ativado",
@@ -184,12 +184,12 @@ new IOService(
                   value: 1,
                   title: "usuario ativado",
                   pos: "left",
-                  _class: "text-success"
+                  _class: "text-success",
                 });
               else return self.dt.addDTIcon({ value: 0, _class: "invisible" });
-            }
-          }
-        ]
+            },
+          },
+        ],
       })
       .on("click", ".btn-dt-button[data-original-title=Editar]", function() {
         var data = self.dt.row($(this).parents("tr")).data();
@@ -211,7 +211,7 @@ new IOService(
           beforeSend: function() {
             HoldOn.open({
               message: "Enviando email, aguarde...",
-              theme: "sk-bounce"
+              theme: "sk-bounce",
             });
           },
           success: function(data) {
@@ -222,20 +222,20 @@ new IOService(
                   "Um email de confirmação foi enviado para o email " +
                   data.message,
                 confirmButtonText: "OK",
-                type: "success"
+                type: "success",
               });
             } else {
               swal({
                 title:
                   "Não foi possível enviar o email de confirmação. Verifique se o email cadastrado está correto",
                 confirmButtonText: "OK",
-                type: "error"
+                type: "error",
               });
             }
           },
           error: function(ret) {
             self.defaults.ajax.onError(ret, self.callbacks.create.onError);
-          }
+          },
         }); //end ajax
       })
       .on("draw.dt", function() {
@@ -253,14 +253,14 @@ new IOService(
         { data: "create", name: "create" },
         { data: "update", name: "update" },
         { data: "delete", name: "delete" },
-        { data: "view", name: "view" }
+        { data: "view", name: "view" },
       ],
       columnDefs: [
         {
           targets: "__dt_servico",
           width: "60%",
           searchable: false,
-          orderable: false
+          orderable: false,
         },
         {
           targets: "__dt_criar",
@@ -280,7 +280,7 @@ new IOService(
             //   row.alias +
             //   '.create"><br>'
             // );
-          }
+          },
         },
         {
           targets: "__dt_alterar",
@@ -290,7 +290,7 @@ new IOService(
           orderable: false,
           render: function(data, type, row) {
             return `<input type="checkbox" name="permissions[${row.alias}.update]"><br>`;
-          }
+          },
         },
         {
           targets: "__dt_excluir",
@@ -300,7 +300,7 @@ new IOService(
           orderable: false,
           render: function(data, type, row) {
             return `<input type="checkbox" name="permissions[${row.alias}.delete]"><br>`;
-          }
+          },
         },
         {
           targets: "__dt_visualizar",
@@ -310,9 +310,9 @@ new IOService(
           orderable: false,
           render: function(data, type, row) {
             return `<input type="checkbox" name="permissions[${row.alias}.view]"><br>`;
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     self.callbacks.view = view(self);
@@ -324,7 +324,8 @@ new IOService(
           "Um email de confirmação foi enviado para " + data.email,
           { timeOut: 10000 }
         );
-      self.tabs["listar"].tab.tab("show");
+
+      if (self.tabs.listar) self.tabs["listar"].tab.tab("show");
     };
 
     self.callbacks.create.onSuccess = function(data) {
@@ -333,9 +334,11 @@ new IOService(
         "Um email de confirmação foi enviado para " + data.data,
         { timeOut: 10000 }
       );
-      self.dt.ajax.reload();
-      self.dt.draw(true);
-      self.tabs["listar"].tab.tab("show");
+      if (self.tabs.listar) {
+        self.dt.ajax.reload();
+        self.dt.draw(true);
+        self.tabs["listar"].tab.tab("show");
+      }
     };
 
     self.callbacks.unload = function(self) {
@@ -355,6 +358,12 @@ new IOService(
 
       self.fv[0].enableValidator("password");
     };
+
+    console.log(IO.loggedUser);
+
+    if (IO.loggedUser.isFrontendUser) {
+      self.view(IO.loggedUser.userEmail);
+    }
   }
 );
 
@@ -366,6 +375,10 @@ function view(self) {
       $("[name='last_name']").val(data.last_name);
       $("[name='email']").val(data.email);
       $("#admin").aaToggle(data.admin);
+
+      if (IO.loggedUser.isFrontendUser) {
+        $("[name='email']").attr("readonly", true);
+      }
 
       try {
         for (var permission in data.permissions) {
@@ -387,6 +400,6 @@ function view(self) {
     },
     onError: function(err) {
       console.log("error on view load", err);
-    }
+    },
   };
 }

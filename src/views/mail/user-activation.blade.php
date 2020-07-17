@@ -1,5 +1,8 @@
+@php
+  $msg = data_get($data,'extra.message','Clique no link abaixo para ativar o cadastro.');
+@endphp
 <body>
-    Clique no link abaixo para ativar o cadastro.
+    {{$msg}}
     <br>
     <br>
     {{ $data['userActivationUrl'] }}
